@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../Header';
 import bg from '../../assets/images/bg2.jpg'
-
+import data from '../../data';
 export default function ProductDetail({ route, navigation }) {
   const { item } = route.params;
 
   const addToCart = async (product) => {
+
     try {
       const existingCart = await AsyncStorage.getItem("cart");
+
       let cart = existingCart ? JSON.parse(existingCart) : [];
 
       const existingProductIndex = cart.findIndex(
@@ -34,25 +36,35 @@ export default function ProductDetail({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={bg} style={{width:'100%',height:'100%'}}>
-      <View style={styles.header}>
-        <Header navigation={navigation} />
+      <ScrollView >
+      <ImageBackground source={bg} style={{flex:1 }}>
+        
+
+        <View style={styles.header}>
+          <Header navigation={navigation} />
+        </View>
+        <View style={styles.itembg}>
+        <View style={styles.image}>
+          <Image
+            source={data[data.findIndex((itemData) => itemData.id === item.id)].image}
+            style={styles.productImage}
+          />
+
+        </View></View>
+      <View style={{paddingBottom:200}}>
+      <Text style={styles.productTitle}>{item.title}</Text> 
+        <Text style={styles.productPrice}>${item.price}</Text>
+        <Text style={styles.productDescription}>{item.description}</Text>
+        <Text style={styles.productCategory}>Danh mục: {item.category}</Text>
+        <TouchableOpacity
+          style={styles.addToCartButton}
+          onPress={() => addToCart(item)}
+        >
+          <Text style={styles.addToCartButtonText}>Thêm vào giỏ hàng</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.image}>
-        <Image source={{ uri: item.image }} style={styles.productImage} />
-      </View>
-      <Text style={styles.productTitle}>{item.title}</Text>
-      <Text style={styles.productPrice}>Giá tiền: ${item.price}</Text>
-      <Text style={styles.productDescription}>{item.description}</Text>
-      <Text style={styles.productCategory}>Danh mục: {item.category}</Text>
-      <TouchableOpacity
-        style={styles.addToCartButton}
-        onPress={() => addToCart(item)}
-      >
-        <Text style={styles.addToCartButtonText}>Thêm vào giỏ hàng</Text>
-      </TouchableOpacity>
-      
-      </ImageBackground>
+    </ImageBackground>
+      </ScrollView>
     </View>
   );
 }
@@ -60,14 +72,23 @@ export default function ProductDetail({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-   
+    backgroundColor: '#f3f3f3',
+
   },
   header: {
-    marginStart:15, marginTop:20
+    marginStart: 15, marginTop: 20
   },
   image: {
-    alignItems:"center"
+    alignItems: "center",
+    margin: 50,
+  },
+  itembg: {
+    alignSelf: 'center',
+    backgroundColor: '#f3f3f3',
+    width: '94%',
+    height: 350,
+    
+    borderRadius: 30
   },
   productImage: {
     width: '100%',
@@ -75,28 +96,38 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     resizeMode: 'center',
     marginBottom: 16,
-    
+
   },
   productTitle: {
     fontSize: 24,
+    color: 'white',
     fontWeight: 'bold',
+    alignItems: 'flex-start',
     marginBottom: 8,
-   
+    marginStart: 15,
+
   },
   productPrice: {
-    fontSize: 18,
-    color: 'red',
+    fontSize: 25,
+    color: 'yellow',
+    fontWeight: 'bold',
     marginBottom: 8,
+    textAlign: 'right',
+    marginEnd: 20,
+
+    marginBottom: 20
   },
   productDescription: {
     fontSize: 16,
     marginBottom: 16,
-  
+    marginStart: 15,
+
   },
   productCategory: {
     fontSize: 16,
-    color: 'gray',
+    color: 'white',
     marginBottom: 16,
+    marginStart: 15,
   },
   ratingContainer: {
     flexDirection: 'row',
@@ -117,12 +148,14 @@ const styles = StyleSheet.create({
   },
   addToCartButton: {
     backgroundColor: '#59caa7',
-    padding: 10,
-    borderRadius: 5,
-    alignItems:"center",
+    padding: 20,
+    borderRadius: 15,
+    alignSelf: 'center',
+    width: '80%',
+    alignItems: "center",
   },
   addToCartButtonText: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
   },
 });

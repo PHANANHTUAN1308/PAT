@@ -87,7 +87,8 @@ export default function CategoryList({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{marginStart:15, marginTop:20, marginBottom:20}}><Header Title={"Category"} navigation={navigation} /></View>
+      <View style={{marginStart:15, marginTop:25, marginBottom:20}}><Header navigation={navigation} /></View>
+      <Text style={{textAlign: 'center', marginTop: -36, paddingBottom: 20, fontSize: 20, fontWeight: 'bold'}}>Category</Text>
       <View style={{ flex: 1 }}>
         <FlatList
           renderItem={({ item, index }) => renderItem(item, index)}

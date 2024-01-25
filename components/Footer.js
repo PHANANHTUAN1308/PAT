@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useRoute } from '@react-navigation/native'; // Import useRoute from @react-navigation/native
 
 export default function Footer({ navigation }) {
-  const [activeTab, setActiveTab] = useState('Home');
-
-  const handleTabPress = (tab) => {
-    setActiveTab(tab);
-    navigation.navigate(tab);
-  };
+  const route = useRoute();
 
   const renderIcon = (tabName, iconName) => {
-    const isActive = activeTab === tabName;
-    const iconColor = isActive ? 'blue' : 'black';
+    const iconColor = isActiveTab(tabName) ? '#007bff' : '#666';
 
     return (
       <TouchableOpacity onPress={() => handleTabPress(tabName)} style={styles.tab}>
@@ -20,6 +15,14 @@ export default function Footer({ navigation }) {
         <Text style={[styles.label, { color: iconColor }]}>{tabName}</Text>
       </TouchableOpacity>
     );
+  };
+
+  const isActiveTab = (tabName) => {
+    return route.name === tabName;
+  };
+
+  const handleTabPress = (tabName) => {
+    navigation.navigate(tabName)
   };
 
   return (
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    marginBottom: 5,  // Adjust icon position
+    marginBottom: 5,
   },
   label: {
     fontSize: 13,

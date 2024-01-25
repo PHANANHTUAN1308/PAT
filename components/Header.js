@@ -6,7 +6,7 @@ import { CommonActions } from '@react-navigation/native';
 export default function Header({ navigation }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.dispatch(CommonActions.goBack())}>
+      <TouchableOpacity onPress={() => navigation.dispatch(CommonActions.goBack())} style={{paddingHorizontal:5}}>
         <Icon name="chevron-left" size={20} color="black" />
       </TouchableOpacity>
       <StatusBar style="auto" />

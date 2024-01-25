@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
 import {
-  Dimensions,
-  FlatList,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+  Dimensions, FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,} from "react-native";
 import Header from "../Header";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import CartItem from "../cart/CartItem";
 const width = Dimensions.get("window").width / 2 - 30;
 
 export default function ProductByCate({ route }) {
@@ -36,13 +29,9 @@ export default function ProductByCate({ route }) {
         console.log("Finally called");
       });
   };
-
-  // Navigate
   const navigateToProductDetail = (item) => {
     navigation.navigate("ProductDetail", { item });
   };
-
-  // Card Item
   const Card = ({ item }) => (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -80,11 +69,10 @@ export default function ProductByCate({ route }) {
     <SafeAreaView
       style={{
         flex: 1,
-
         backgroundColor: "white",
       }}
     >
-      <Header Title={category} navigation={navigation} />
+      <View style={{flexDirection:"row", paddingTop:20}}><Header Title={category} navigation={navigation} /><Text style={{alignSelf:"flex-end", fontSize:20}}>Category</Text></View>
       <View style={{ flex: 1, paddingHorizontal: 20 }}>
         <FlatList
           columnWrapperStyle={{ justifyContent: "space-between" }}
@@ -96,7 +84,7 @@ export default function ProductByCate({ route }) {
           }}
           key={2}
           data={products}
-          renderItem={Card}
+          renderItem={({ item }) => <CartItem item={item} />}
           numColumns={2}
         />
       </View>
@@ -105,15 +93,6 @@ export default function ProductByCate({ route }) {
 }
 
 const style = StyleSheet.create({
-  card: {
-    height: 225,
-    backgroundColor: "light",
-    width: width,
-    marginHorizontal: 2,
-    borderRadius: 10,
-    marginBottom: 20,
-    padding: 15,
-  },
   searchContainer: {
     height: 50,
     backgroundColor: "light",
@@ -121,6 +100,15 @@ const style = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+  },
+  header:{
+    marginTop: 50,
+    marginStart: 20,
+  },
+  cate:{
+    textAlign:'center',
+    fontSize: 20,
+    marginTop: -20
   },
   input: {
     marginLeft: 20,
