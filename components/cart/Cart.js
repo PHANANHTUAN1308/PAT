@@ -31,7 +31,9 @@ export default function Cart({navigation,navigateToProductDetail}) {
   }, []);
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cartItems
+      .reduce((total, item) => total + item.price * item.quantity, 0)
+      .toFixed(2);
   };
 
   const handleDeleteItem = (itemId) => {
@@ -152,14 +154,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 16,
+    padding: 15,
   },
   header: {
-    marginBottom: 16,
+    marginTop: 5,
   },
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 16,
   },
   cartItem: {

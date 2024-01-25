@@ -1,81 +1,57 @@
-import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Footer({ navigation }) {
+  const [activeTab, setActiveTab] = useState('Home');
+
+  const handleTabPress = (tab) => {
+    setActiveTab(tab);
+    navigation.navigate(tab);
+  };
+
+  const renderIcon = (tabName, iconName) => {
+    const isActive = activeTab === tabName;
+    const iconColor = isActive ? 'blue' : 'black';
+
+    return (
+      <TouchableOpacity onPress={() => handleTabPress(tabName)} style={styles.tab}>
+        <Icon name={iconName} size={24} color={iconColor} style={styles.icon} />
+        <Text style={[styles.label, { color: iconColor }]}>{tabName}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <View style={styles.centericon}>      
-              <Icon name="home" size={20} color="black" />
-            <Text style={{fontSize:12}}>Trang chủ</Text>
-          </View>
-        </TouchableOpacity>
-
-
-       
-        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-          <View style={styles.centericon}>          
-              <Icon name="shopping-cart" size={20} color="black" />       
-            <Text style={{fontSize:12}}>Giỏ hàng</Text>
-          </View>
-        </TouchableOpacity>
-        
-        {/* <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
-          <View style={styles.centericon}>
-              <Icon name="heart" size={20} color="black" />
-            <Text style={{fontSize:12}}>Yêu thích</Text>
-          </View>
-        </TouchableOpacity> */}
-
-        <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
-        <View style={styles.centericon}>
-            <Icon name="bell" size={20} color="black" />       
-          <Text style={{fontSize:12}}>Thông báo</Text>
-        </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-        <View style={styles.centericon}>     
-            <Icon name="user" size={20} color="black" />    
-          <Text style={{fontSize:12}}>Tôi</Text>
-        </View>
-        </TouchableOpacity>
-
-      </View>
-
-      <StatusBar style="auto" />
+      {renderIcon('Home', 'home-filled')}
+      {renderIcon('Cart', 'shopping-cart')}
+      {renderIcon('Category', 'stacked-bar-chart')}
+      {renderIcon('Profile', 'person')}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 1,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 10,
-    shadowRadius: 20,
-    elevation: 5,
-  },
-  buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: '#f2f2f2',
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+    borderTopStartRadius: 5,
+    borderTopEndRadius: 5,
+    justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 20, 
-    width: '100%', 
+    paddingVertical: 10,
   },
-  centericon:{
+  tab: {
     alignItems: 'center',
-  
-  }
+  },
+  icon: {
+    marginBottom: 5,  // Adjust icon position
+  },
+  label: {
+    fontSize: 13,
+    fontWeight: 'bold',
+  },
 });

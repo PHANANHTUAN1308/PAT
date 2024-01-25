@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+    padding: 15,
+  },
+  header: {
+    marginTop: 5,
+    
   },
   profileContainer: {
     alignItems: 'center',

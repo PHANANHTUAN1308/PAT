@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../Header';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import bg from '../../assets/images/bg2.jpg'
 
 export default function ProductDetail({ route, navigation }) {
   const { item } = route.params;
@@ -34,6 +34,7 @@ export default function ProductDetail({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={bg} style={{width:'100%',height:'100%'}}>
       <View style={styles.header}>
         <Header navigation={navigation} />
       </View>
@@ -44,13 +45,14 @@ export default function ProductDetail({ route, navigation }) {
       <Text style={styles.productPrice}>Giá tiền: ${item.price}</Text>
       <Text style={styles.productDescription}>{item.description}</Text>
       <Text style={styles.productCategory}>Danh mục: {item.category}</Text>
-
       <TouchableOpacity
         style={styles.addToCartButton}
         onPress={() => addToCart(item)}
       >
         <Text style={styles.addToCartButtonText}>Thêm vào giỏ hàng</Text>
       </TouchableOpacity>
+      
+      </ImageBackground>
     </View>
   );
 }
@@ -59,8 +61,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 16,
    
+  },
+  header: {
+    marginStart:15, marginTop:20
   },
   image: {
     alignItems:"center"
@@ -115,7 +119,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#59caa7',
     padding: 10,
     borderRadius: 5,
-    marginTop: 10,
     alignItems:"center",
   },
   addToCartButtonText: {

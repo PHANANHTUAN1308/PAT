@@ -1,35 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View,TouchableOpacity, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { ScrollView, StyleSheet, Text, View,TouchableOpacity, Image, ImageBackground } from 'react-native';
 import Footer from './Footer';
 import Header from './Header';
 import Product from './products/Product';
-
+import CarouselSlider from './slider/CarouselSlider'
 import Search from './products/Search';
-
+import bg from '../assets/images/bg2.jpg'
 export default function Home({ navigation }) {
   const navigateToProductDetail = (item) => {
    
     navigation.navigate('ProductDetail', { item });
   };
   return (
-    <View style={styles.container}>
-     <ScrollView>
-        <View style={styles.search}>
-        <Search />
-      </View>
-      <View style={styles.slider}>
-      </View>    
+    
+    
+      <View style={styles.container}>
+     <ScrollView><ImageBackground source={bg}>   
+        <View style={styles.search}><Search /></View>
         <View>
-          <Text style={styles.textnewproduct}>TẤT CẢ SẢN PHẨM</Text>
+          <CarouselSlider/>
           <Product navigateToProductDetail={navigateToProductDetail} />        
-        </View>
+        </View></ImageBackground>
       </ScrollView>
       <View style={styles.footer}>
         <Footer navigation={navigation} />
       </View>
       <StatusBar style="auto" />
     </View>
+    
   );
 }
 
@@ -37,31 +35,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'white',
-   
+   backgroundColor: 'blue'
   },
 
   footer: {
+
     justifyContent: 'flex-end',
   },
-  banner:{
-    marginTop:30,
-
-  },
   search:{
-    marginTop:15
+    marginTop:20,
+    paddingTop:40,
+    paddingBottom:10,
   },
-  header: {},
-  goback:{},
-  textnewproduct:{
-   marginTop:20,
-   marginBottom:10,
-   fontSize:20,
-   fontWeight: 'bold',
-   color:"red",
-   textAlign:'center'
-  },
-
-  
-  
 });

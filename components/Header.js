@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     marginStart:10,
     justifyContent: 'center',
     height: 20,
-
+    backgroundColor: 'none'
    
     
   },

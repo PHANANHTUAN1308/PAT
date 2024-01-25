@@ -53,13 +53,16 @@ const Product = ({ navigateToProductDetail, addToCart }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'none',
   },
   productItem: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white',
-    margin: 10,
+    marginStart:5,
+    marginEnd:5,
+    marginBottom:0,
+    marginTop:10,
     padding: 10,
     borderRadius: 5,
     shadowColor: '#000',
